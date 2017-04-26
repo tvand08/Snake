@@ -8,9 +8,18 @@ import java.io.IOException;
  * Created by Trevor Vanderee on 2017-04-25.
  */
 public class keyThread extends Thread implements KeyListener {
-
-    public keyThread(JPanel c){
+    private boolean[][] field;
+    private int xPos, yPos;
+    private JPanel c;
+    private myThread moving;
+    public keyThread(JPanel c,boolean[][] field,myThread smake){
         c.addKeyListener(this);
+        this.moving = smake;
+        this.c =c;
+        this.field = field;
+        field[1][1]=true;
+        xPos =1;
+        yPos = 1;
     }
     public void run(){
         try {
@@ -27,7 +36,25 @@ public class keyThread extends Thread implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
+
+        int move = e.getKeyCode();
+        field[xPos][yPos]=false;
+        System.out.println(move);
+        switch (move){
+            case 37:
+                moving.setDirection(1);
+                break;
+            case 38:
+                moving.setDirection(0);
+                break;
+            case 39:
+                moving.setDirection(2);
+                break;
+            case 40:
+                moving.setDirection(3);
+                break;
+        }
+
     }
 
     @Override

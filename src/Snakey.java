@@ -10,18 +10,27 @@ public class Snakey {
     private keyThread k;
     private JFrame frame;
     private JTextField  tf;
+    private boolean[][] field;
+    private Thread moving;
     public Snakey( ){
+        field = new boolean[40][40];
+        for (boolean[] i:field) {
+            for(boolean j: i){
+                j=false;
+            }
+        }
         frame = new JFrame();
-        c = new Panel();
-        frame.setSize(400,400);
+        c = new Panel(field);
+        moving=new myThread(field,c);
+        frame.setSize(800,830);
         c.setSize(c.getPreferredSize());
         frame.add(c);
-
         c.setFocusable(true);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        k = new keyThread(c);
+        k = new keyThread(c,field, (myThread) moving);
         k.start();
+        moving.start();
     }
 
     private void repaint() {
