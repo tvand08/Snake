@@ -14,16 +14,16 @@ public class myThread extends Thread {
     private int posX;
     private int posY;
     private int Direction;
-    private boolean[][] field;
+    private Field field;
     private Queue<Position> queue;
     private int snakeSize;
     private Position temp;
     private JPanel c;
 
-    public myThread(boolean[][] field , JPanel c){
+    public myThread(Field field , JPanel c){
         this.c = c;
         this.field = field;
-        snakeSize = 3;
+        snakeSize = 10;
         queue = new LinkedList<>();
         posX =1;
         posY =1;
@@ -49,12 +49,18 @@ public class myThread extends Thread {
                 System.out.println("You Lose");
                 break;
             }
-            field[posX][posY] = true;
+            if(field.getCellValue(posX,posY)==true){
+                System.out.println("You Lose");
+                break;
+            }
+            field.setCellValue(posX,posY,true);
+
             queue.add(new Position(posX, posY));
             if (snakeSize < queue.size()){
                 temp = queue.remove();
-                field[temp.getX()][temp.getY()]=false;
+                field.setCellValue(temp.getX(),temp.getY(),false);
             }
+
             c.repaint();
             c.revalidate();
             try{

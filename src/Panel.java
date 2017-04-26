@@ -11,9 +11,9 @@ import java.util.Queue;
  */
 public class Panel extends JPanel {
     private static final int BOX_SIZE = 20;
-    private boolean[][] field;
+    private Field field;
     private Queue<boolean[][]> queue;
-    public Panel(boolean[][] field ){
+    public Panel(Field field){
         this.field = field;
 
     }
@@ -24,8 +24,8 @@ public class Panel extends JPanel {
 
                 g.setColor(Color.BLACK);
                 g.drawRect( j*BOX_SIZE, i*BOX_SIZE, BOX_SIZE, BOX_SIZE);
-                if(field[i][j]){
-                    g.setColor(Color.RED);
+                if(field.getCellValue(i,j)){
+                    g.setColor(Color.BLUE);
                 }else {
                     g.setColor(Color.white);
                 }
