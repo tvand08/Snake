@@ -42,16 +42,24 @@ public class keyThread extends Thread implements KeyListener {
         System.out.println(move);
         switch (move){
             case 37:
-                moving.setDirection(1);
+                if(moving.getDirection()!=2) {
+                    moving.setDirection(1);
+                }
                 break;
             case 38:
-                moving.setDirection(0);
+                if(moving.getDirection()!=3) {
+                    moving.setDirection(0);
+                }
                 break;
             case 39:
-                moving.setDirection(2);
+                if(moving.getDirection()!=1) {
+                    moving.setDirection(2);
+                }
                 break;
             case 40:
-                moving.setDirection(3);
+                if(moving.getDirection()!=0) {
+                    moving.setDirection(3);
+                }
                 break;
         }
 

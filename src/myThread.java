@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Created by Trevor Vanderee on 2017-04-25.
@@ -13,11 +15,16 @@ public class myThread extends Thread {
     private int posY;
     private int Direction;
     private boolean[][] field;
+    private Queue<Position> queue;
+    private int snakeSize;
+    private Position temp;
     private JPanel c;
 
     public myThread(boolean[][] field , JPanel c){
         this.c = c;
         this.field = field;
+        snakeSize = 3;
+        queue = new LinkedList<>();
         posX =1;
         posY =1;
         setDirection(EAST);
@@ -38,11 +45,16 @@ public class myThread extends Thread {
                     posY--;
                     break;
             }
-            if(posX<0 || posY<0||posX>39 ||posY>39){
+            if (posX < 0 || posY < 0 || posX > 39 || posY > 39) {
                 System.out.println("You Lose");
                 break;
             }
             field[posX][posY] = true;
+            queue.add(new Position(posX, posY));
+            if (snakeSize < queue.size()){
+                temp = queue.remove();
+                field[temp.getX()][temp.getY()]=false;
+            }
             c.repaint();
             c.revalidate();
             try{
@@ -53,5 +65,8 @@ public class myThread extends Thread {
 
     public void setDirection(int dir){
         Direction = dir;
+    }
+    public int getDirection(){
+        return Direction;
     }
 }
