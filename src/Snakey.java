@@ -25,7 +25,9 @@ public class Snakey {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         k = new keyThread(c, (myThread) moving);
         k.start();
+        ((myThread) moving).newFood();
         moving.start();
+
     }
     public static void main(String[] args){ new Snakey();}
 }

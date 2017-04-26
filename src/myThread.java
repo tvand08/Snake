@@ -23,7 +23,7 @@ public class myThread extends Thread {
     public myThread(Field field , JPanel c){
         this.c = c;
         this.field = field;
-        snakeSize = 10;
+        snakeSize = 3;
         queue = new LinkedList<>();
         posX =1;
         posY =1;
@@ -49,16 +49,20 @@ public class myThread extends Thread {
                 System.out.println("You Lose");
                 break;
             }
-            if(field.getCellValue(posX,posY)==true){
+            if(field.getCellValue(posX,posY)==2){
+                newFood();
+                snakeSize += 4;
+            }else if(field.getCellValue(posX,posY)==1){
                 System.out.println("You Lose");
                 break;
             }
-            field.setCellValue(posX,posY,true);
+            field.setCellValue(posX,posY,1);
 
             queue.add(new Position(posX, posY));
+
             if (snakeSize < queue.size()){
                 temp = queue.remove();
-                field.setCellValue(temp.getX(),temp.getY(),false);
+                field.setCellValue(temp.getX(),temp.getY(),0);
             }
 
             c.repaint();
@@ -74,5 +78,15 @@ public class myThread extends Thread {
     }
     public int getDirection(){
         return Direction;
+    }
+
+    public void newFood(){
+        int posX = (int)(Math.random()*39);
+        int posY = (int)(Math.random()*39);
+        if(field.getCellValue(posX,posY)==1){
+            newFood();
+            return;
+        }
+        field.setCellValue(posX,posY,2);
     }
 }

@@ -24,10 +24,12 @@ public class Panel extends JPanel {
 
                 g.setColor(Color.BLACK);
                 g.drawRect( j*BOX_SIZE, i*BOX_SIZE, BOX_SIZE, BOX_SIZE);
-                if(field.getCellValue(i,j)){
+                if(field.getCellValue(i,j)==1){
                     g.setColor(Color.BLUE);
-                }else {
-                    g.setColor(Color.white);
+                }else if(field.getCellValue(i,j)==2){
+                    g.setColor(Color.RED);
+                }else{
+                    g.setColor(Color.WHITE);
                 }
                 g.fillRect(j*BOX_SIZE + 1, i*BOX_SIZE+1, BOX_SIZE - 1, BOX_SIZE - 1);
             }
