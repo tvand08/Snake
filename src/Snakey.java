@@ -17,7 +17,7 @@ public class Snakey {
         frame = new JFrame();
         c = new Panel(field);
         moving=new myThread(field,c);
-        frame.setSize(800,830);
+        frame.setSize(820,850);
         c.setSize(c.getPreferredSize());
         frame.add(c);
         c.setFocusable(true);

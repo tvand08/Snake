@@ -14,6 +14,7 @@ public class myThread extends Thread {
     private int posX;
     private int posY;
     private int Direction;
+    private boolean updated;
     private Field field;
     private Queue<Position> queue;
     private int snakeSize;
@@ -21,6 +22,7 @@ public class myThread extends Thread {
     private JPanel c;
 
     public myThread(Field field , JPanel c){
+        updated = false;
         this.c = c;
         this.field = field;
         snakeSize = 3;
@@ -67,6 +69,7 @@ public class myThread extends Thread {
 
             c.repaint();
             c.revalidate();
+            updated = true;
             try{
                 sleep((long)100);
             }catch (InterruptedException e){}
@@ -87,6 +90,13 @@ public class myThread extends Thread {
             newFood();
             return;
         }
+        System.out.println(posX + ", "+posY );
         field.setCellValue(posX,posY,2);
+    }
+    public boolean getUpdated(){
+        return updated;
+    }
+    public void setUpdated(boolean it){
+        updated = it;
     }
 }

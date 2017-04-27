@@ -3,8 +3,7 @@ import sun.awt.image.ImageWatched;
 import javax.swing.*;
 
 import java.awt.*;
-import java.util.LinkedList;
-import java.util.Queue;
+
 
 /**
  * Created by Trevor Vanderee on 2017-04-25.
@@ -12,15 +11,14 @@ import java.util.Queue;
 public class Panel extends JPanel {
     private static final int BOX_SIZE = 20;
     private Field field;
-    private Queue<boolean[][]> queue;
-    public Panel(Field field){
+    public Panel(Field field) {
         this.field = field;
-
     }
+
        public void paintComponent(Graphics g){
         super.paintComponent(g);
-        for(int i =0; i <39; i++ ){
-            for(int j =0; j<39; j++) {
+        for(int i =0; i <40; i++ ){
+            for(int j =0; j<40; j++) {
 
                 g.setColor(Color.BLACK);
                 g.drawRect( j*BOX_SIZE, i*BOX_SIZE, BOX_SIZE, BOX_SIZE);

@@ -33,28 +33,31 @@ public class keyThread extends Thread implements KeyListener {
     public void keyPressed(KeyEvent e) {
 
         int move = e.getKeyCode();
-        System.out.println(move);
-        switch (move){
-            case 37:
-                if(moving.getDirection()!=2) {
-                    moving.setDirection(1);
-                }
-                break;
-            case 38:
-                if(moving.getDirection()!=3) {
-                    moving.setDirection(0);
-                }
-                break;
-            case 39:
-                if(moving.getDirection()!=1) {
-                    moving.setDirection(2);
-                }
-                break;
-            case 40:
-                if(moving.getDirection()!=0) {
-                    moving.setDirection(3);
-                }
-                break;
+        //System.out.println(move);
+        if(moving.getUpdated()) {
+            switch (move) {
+                case 37:
+                    if (moving.getDirection() != 2) {
+                        moving.setDirection(1);
+                    }
+                    break;
+                case 38:
+                    if (moving.getDirection() != 3) {
+                        moving.setDirection(0);
+                    }
+                    break;
+                case 39:
+                    if (moving.getDirection() != 1) {
+                        moving.setDirection(2);
+                    }
+                    break;
+                case 40:
+                    if (moving.getDirection() != 0) {
+                        moving.setDirection(3);
+                    }
+                    break;
+            }
+            moving.setUpdated(false);
         }
 
     }
