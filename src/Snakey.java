@@ -2,9 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by Trevor Vanderee on 2017-04-25.
+ * Program: Snake
+ * Author: Trevor Vanderee
+ * Date: 2017-04-25
+ * Description: Implementation of the classic
+ *  arcade game snake. Goal of the game is to
+ *  eat as much food as you can without hitting
+ *  any walls or yourself
  */
 public class Snakey {
+
+    //Objects in use
     private JPanel c;
     private Graphics g;
     private keyThread k;
@@ -12,22 +20,34 @@ public class Snakey {
     private JTextField  tf;
     private Field field;
     private Thread moving;
+
     public Snakey( ){
+        //Create Playing Field Array
         field = new Field(40,40);
-        frame = new JFrame();
+
+        //Panel operations to house board
         c = new Panel(field);
-        moving=new myThread(field,c);
-        frame.setSize(820,850);
         c.setSize(c.getPreferredSize());
-        frame.add(c);
         c.setFocusable(true);
+
+        //Create Frame
+        frame = new JFrame();
+        frame.setSize(820,850);
+        frame.add(c);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        k = new keyThread(c, (myThread) moving);
-        k.start();
-        ((myThread) moving).newFood();
-        moving.start();
 
-    }
+        //Create Main Game Thread
+        moving=new myThread(field,c);
+
+        //Keystroke Listener
+        k = new keyThread(c, (myThread) moving);
+
+        //Create Food Item(RED)
+        ((myThread) moving).newFood();
+        //Start Game
+        moving.start();
+    }//Constructor
+
     public static void main(String[] args){ new Snakey();}
 }

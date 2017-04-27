@@ -3,70 +3,99 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Created by Trevor Vanderee on 2017-04-25.
+ * Program: Snake
+ * Author: Trevor Vanderee
+ *  This class holds the main
+ *  Game Thread. Most updates
+ *  are called through this thread
  */
 public class myThread extends Thread {
 
-    private static final int NORTH =0;
-    private static final int WEST =1;
+    //Possible snake directions
+    private static final int NORTH = 0;
+    private static final int WEST = 1;
     private static final int EAST = 2;
-    private static final int SOUTH =3;
+    private static final int SOUTH = 3;
+
+    //Current Direction of the snake
+    private int Direction;
+
+    //Current position of snake head
     private int posX;
     private int posY;
-    private int Direction;
-    private boolean updated;
-    private Field field;
-    private Queue<Position> queue;
+
+    //Total size of snake
     private int snakeSize;
-    private Position temp;
+
+    //Check if panel repainted
+    private boolean updated;
+
+    //Queue holds positions of all snake parts
+    private Queue<Position> queue;
+
+    //References
+    private Field field;
     private JPanel c;
+    //Position holder
+    private Position temp;
 
     public myThread(Field field , JPanel c){
-        updated = false;
+        //Link References
         this.c = c;
         this.field = field;
+        //Set base vars
+        updated = false;
         snakeSize = 3;
-        queue = new LinkedList<>();
         posX =1;
         posY =1;
         setDirection(EAST);
+        //Create queue
+        queue = new LinkedList<>();
     }
     public void run(){
+        //Game Thread
         while(true) {
+            //Move one square in designated _Direction
             switch (Direction) {
                 case NORTH:
-                    posX--;
-                    break;
-                case SOUTH:
-                    posX++;
-                    break;
-                case EAST:
-                    posY++;
-                    break;
-                case WEST:
                     posY--;
                     break;
+                case SOUTH:
+                    posY++;
+                    break;
+                case EAST:
+                    posX++;
+                    break;
+                case WEST:
+                    posX--;
+                    break;
             }
+            //Check if out of bounds
             if (posX < 0 || posY < 0 || posX > 39 || posY > 39) {
                 System.out.println("You Lose");
                 break;
             }
-            if(field.getCellValue(posX,posY)==2){
+            //Check if snake ate food
+            if(field.getCellValue(posY,posX)==2){
                 newFood();
                 snakeSize += 4;
-            }else if(field.getCellValue(posX,posY)==1){
+            }
+            //else check if snake ate itself
+            else if(field.getCellValue(posY,posX)==1){
                 System.out.println("You Lose");
                 break;
             }
-            field.setCellValue(posX,posY,1);
+            //set the value of the current cell to be snake
+            field.setCellValue(posY,posX,1);
+            //add to queue
+            queue.add(new Position(posY, posX));
 
-            queue.add(new Position(posX, posY));
-
+            //Check if we can remove from the tail
             if (snakeSize < queue.size()){
                 temp = queue.remove();
                 field.setCellValue(temp.getX(),temp.getY(),0);
             }
-
+            //Update
             c.repaint();
             c.revalidate();
             updated = true;
@@ -76,13 +105,28 @@ public class myThread extends Thread {
         }
     }
 
+    /**
+     * Set the direction of the snake
+     * @param dir: The direction
+     */
     public void setDirection(int dir){
         Direction = dir;
     }
+
+    /**
+     * Get the current direction of
+     * the snake
+     * @return int Direction
+     */
     public int getDirection(){
         return Direction;
     }
 
+    /**
+     * Create a new food in a random
+     * spot. If that spot is already
+     * snake, try again.
+     */
     public void newFood(){
         int posX = (int)(Math.random()*39);
         int posY = (int)(Math.random()*39);
@@ -90,12 +134,22 @@ public class myThread extends Thread {
             newFood();
             return;
         }
-        System.out.println(posX + ", "+posY );
         field.setCellValue(posX,posY,2);
     }
+
+    /**
+     * Return whether or not the
+     * screen has been updated
+     * @return boolean updated
+     */
     public boolean getUpdated(){
         return updated;
     }
+
+    /**
+     * Set the updated value
+     * @param it: boolean
+     */
     public void setUpdated(boolean it){
         updated = it;
     }
